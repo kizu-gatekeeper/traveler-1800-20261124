@@ -13,11 +13,23 @@ import sys
 LINE = "Picture a web of post roads swifter than any horse, joining every library, market and workshop on Earth, where a letter crosses the world in a breath and any man may read any book from his own chair."
 
 
+def write_entry(out_dir: str) -> str:
+    """Write the sentence to ``entry.txt`` in ``out_dir``; return its path.
+
+    The file holds exactly the sentence and nothing else: one line of
+    plain text, no trailing newline, so the gate reads the 199
+    characters and nothing more.
+    """
+    os.makedirs(out_dir, exist_ok=True)
+    entry_path = os.path.join(out_dir, "entry.txt")
+    with open(entry_path, "w", encoding="utf-8", newline="") as f:
+        f.write(LINE)
+    return entry_path
+
+
 def main() -> int:
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8", newline="") as f:
-        f.write(LINE)
+    write_entry(out_dir)
     return 0
 
 
